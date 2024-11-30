@@ -66,10 +66,6 @@ Dockerfile Example
 
 Each microservice has its own Dockerfile. Below is an example for the Python-based services:
 
-dockerfile
-
-Copy code
-
 \# Dockerfile for Catalog/User Service
 
 FROM python:3.9-slim
@@ -88,10 +84,6 @@ CMD \["python", "app.py"\]
 
 For the Order Service, use the following:
 
-dockerfile
-
-Copy code
-
 \# Dockerfile for Order Service
 
 FROM php:8.0-apache
@@ -109,10 +101,6 @@ CMD \["php", "-S", "0.0.0.0:80"\]
 Docker Compose Configuration
 
 Here’s the docker-compose.yml file to manage the services and databases:
-
-yaml
-
-Copy code
 
 version: '3.8'
 
@@ -292,9 +280,6 @@ Catalog Service:
 
 •Example Response:
 
-json
-
-Copy code
 
 \[
 
@@ -326,10 +311,6 @@ User Service:
 
 •Example Response:
 
-json
-
-Copy code
-
 \[
 
 {
@@ -360,10 +341,6 @@ Order Service:
 
 •Example Response:
 
-json
-
-Copy code
-
 \[
 
 {
@@ -392,10 +369,6 @@ Copy code
 
 Run the following commands to test the services:
 
-bash
-
-Copy code
-
 curl http://localhost:5001/catalog
 
 curl http://localhost:5002/users
@@ -408,10 +381,6 @@ How to Run the Project
 
 1.Clone the repository:
 
-bash
-
-Copy code
-
 git clone
 
 2.Navigate to the project directory.
@@ -420,10 +389,6 @@ git clone
 
 4.Build and start the services:
 
-bash
-
-Copy code
-
 docker-compose up --build
 
 5.Test the services using Postman or Curl.
@@ -431,8 +396,6 @@ docker-compose up --build
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 Screenshots
-
-Attach screenshots of Postman requests showing responses for /catalog, /users, and /orders endpoints.
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
