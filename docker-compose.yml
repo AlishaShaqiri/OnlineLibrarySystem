@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  catalog-service:
+    build: ./catalog-service
+    ports:
+      - "5001:5000"
+    environment:
+      - FLASK_APP=app/app.py
+      - DB_HOST=catalog-db
+      - DB_NAME=catalog
+      - DB_USER=catalog_user
+      - DB_PASS=catalog_pass
+    networks:
+      - library-net
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "5002:5000"
+    environment:
+      - FLASK_APP=app/app.py
+      - DB_HOST=user-db
+      - DB_NAME=user
+      - DB_USER=user_user
+      - DB_PASS=user_pass
+    networks:
+      - library-net
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "5003:80"
+    environment:
+      - FLASK_APP=app.py
+      - DB_HOST=order-db
+      - DB_NAME=order
+      - DB_USER=order_user
+      - DB_PASS=order_pass
+    networks:
+      - library-net
+
+  catalog-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: catalog
+      MYSQL_USER: catalog_user
+      MYSQL_PASSWORD: catalog_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - catalog-db-data:/var/lib/mysql
+      - ./catalog-service/init_catalog.sql:/docker-entrypoint-initdb.d/init_catalog.sql  
+    networks:
+      - library-net
+
+  user-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: user
+      MYSQL_USER: user_user
+      MYSQL_PASSWORD: user_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - user-db-data:/var/lib/mysql
+      - ./user-service/init_user.sql:/docker-entrypoint-initdb.d/init_user.sql 
+    networks:
+      - library-net
+
+  order-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: order
+      MYSQL_USER: order_user
+      MYSQL_PASSWORD: order_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - order-db-data:/var/lib/mysql
+      - ./order-service/init_order.sql:/docker-entrypoint-initdb.d/init_order.sql
+    networks:
+      - library-net
+
+volumes:
+  catalog-db-data:
+  user-db-data:
+  order-db-data:
+
+networks:
+  library-net:
+    driver: bridge
